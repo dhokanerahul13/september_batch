@@ -13,8 +13,6 @@ and return it without modifing existing function..cls
 '''
 #1)various names can be bound to the same function object.
 
-
-
 def admin():
     return 'hi i am admin'
 x=admin()    # here x is function object/ variable
@@ -91,7 +89,7 @@ priint_txt('hello')
 ###########################################################################
 #example number two
 print('############################################################')
-
+#with @decorator
 def smart_div(func): #decoratove function
     def inner(a,b):
         print('i am divideing',a,'and ','b')
@@ -104,8 +102,102 @@ def smart_div(func): #decoratove function
 @smart_div
 def division(a,b): #maIN FUNCTION
     print('division',a/b)
-
 division(4,0)    
 
+#############################################################
+#without using @ decorator
+# def smart_div(func): #decoratove function
+#     def inner(a,b):
+#         print('i am divideing',a,'and ','b')
+#         if b==0:
+#             print('we can not devide by 0')
+#         else:
+#             func(a,b)
+#     return inner
+# def division(a,b): #maIN FUNCTION
+#     print('division',a/b)
+
+# y=smart_div(division(1,1))
+# print('#########')
+# y()
 
 
+###########################################################
+
+def decor(num):
+    def inner():
+        a=num()
+        multi=a*5
+        return multi
+    return inner
+def num():
+    return 10
+x=decor(num)           
+print(x())
+
+####################################################################
+
+#we will discuss tomorrow
+print('####################################################')
+
+# def hello_decorator(func):
+#     def inner(x,y):
+#         print('before execution of decorator')
+#         return_value=func(x,y)
+#         print('after execution')
+#         return return_value
+#     return inner    
+
+# def sum_of_number(a,b):
+#     return a+b        
+# # print(sum_of_number(1,2))    
+
+# y=hello_decorator(sum_of_number(3,2))
+# print(y())
+
+
+
+#decorator chaining
+
+def sqrt(func):
+    def inner():
+        x=func()
+        return x*x
+    return inner
+def decor(func):
+    def inner():
+        x=func()
+        return 2*x
+    return inner   
+@sqrt
+@decor
+def num():
+    return 3
+print(num())    
+
+#################################################
+
+print('##########################################################')
+def decor1(func):
+    def inner():
+        x=func()
+        multi=x*5
+        return multi
+    return inner
+def decor(func):
+    def inner():
+        x=func()
+        add=x+5
+        return add
+    return inner   
+@decor1    
+@decor
+def num():
+    return 3
+print(num())  
+num=decor(decor1(num))
+print(num())
+
+
+####################################################################
+#how tob pass argumnt manually in decorator????example???
